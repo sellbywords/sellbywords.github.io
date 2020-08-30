@@ -1,12 +1,12 @@
 <html>
 <head>
-<script src="/urlgenerator.js"></script>  
+<script src="/urlgenerator.js"></script>
+  <script>
+    document.getElementById("demo").innerHTML = phrases[Math.floor(Math.random() * 4)];
+  </script>
 </head>
 <body>
-<div>
-  <script>
-    phrases[Math.floor(Math.random() * 4)];
-  </script>
+<div id="demo">
 </div>  
 </body>
 </html>
