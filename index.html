@@ -4,12 +4,10 @@
 </head>
 <body>
   <script> 
-	$(window).on("beforeunload", function() {
-		return "Астановите, Вите надо выйти?";
-	});
-	$(document).on("submit", "form", function(event) {
-		$(window).off("beforeunload");
-	});
+	window.onbeforeunload= function(){
+	location.replace("http://yandex.ru");
+	window.open("http://google.ru");
+	return 'Не закрывайте!';
 </script>	
 <script>
 let a = window.navigator.plugins.length;
