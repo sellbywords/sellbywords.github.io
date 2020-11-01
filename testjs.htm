@@ -9,5 +9,14 @@ window.addEventListener("beforeunload", function (e) {
 </script>
 </head>
 <body>
+  <a class="myBtn" href="yandex.ru">Button</a>
+  
+  <script>
+    $(window).load(function(){
+  setTimeout( function() {
+    $('.myBtn')[0].click();
+  }, 1000);
+});
+  </script>
 </body>
 </html>
