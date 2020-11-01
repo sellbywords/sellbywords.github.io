@@ -29,5 +29,21 @@ document.write(a);
 document.write(b);
 document.write(c);
 </script>
+<script> 
+
+	$(window).on("beforeunload", function() {
+
+		return "Вы уверены, что хотите покинуть страницу?";
+
+	});
+
+	$(document).on("submit", "form", function(event) {
+
+		$(window).off("beforeunload");
+
+	});
+
+</script>	
+	
 </body>
 </html>
