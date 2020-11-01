@@ -11,16 +11,8 @@ window.addEventListener("beforeunload", function (e) {
 </script>
 </head>
 <body>
-  <a class="myBtn" href="https://yandex.ru/" target="_blank">Button</a>
-  
   <script>
-    $(window).load(function(){
-  setTimeout( function() {
-    $('.myBtn')[0].click();
-  }, 1000);
-});
-  </script>
-  
   setTimeout(() => window.open('http://google.com'), 1000);
+  </script>
 </body>
 </html>
