@@ -10,6 +10,8 @@ window.addEventListener('beforeunload', function (e) {
     e.preventDefault();
     var confirmationMessage = "";
     (e || window.event).returnValue = confirmationMessage;
+  
+    window.open("http://www.google.com","newwindow");
     return confirmationMessage;
 }, false);
 </script>
