@@ -3,6 +3,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<style>
+		.content-b {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(136, 136, 204, 0.5);
+			z-index: 4444;
+		}
+	</style>
 <script>
 window.onbeforeunload = function(){
         window.history.back();
@@ -11,6 +22,7 @@ window.onbeforeunload = function(){
 </script>
 </head>
 <body>
+  <div class="content-b"></div>
   <script>
   var amcu_day_shows = 2; // дни
 var amcu_session_shows = 2; //сессии
