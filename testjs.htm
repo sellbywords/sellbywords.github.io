@@ -8,10 +8,193 @@ window.onbeforeunload = function(){
         return "go to google instead?";
 }
 </script>
+<script>
+  var amcu_day_shows = 2; // дни
+var amcu_session_shows = 2; //сессии
+var amcu_interval = 3;
+txt = new Array();
+txt[0] = "https://yandex.ru"
+txt[1] = "https://google.com"
+var b = Math.round(Math.random() * (txt.length - 1))
+var amcu_url = txt[b];
+var code_vers = 5;
+var amcu_target;
+var amcu_getCookie = function(name) {
+    if (document.cookie.length > 0) {
+        start = document.cookie.indexOf(name + "=");
+        if (start !== -1) {
+            start = start + name.length + 1;
+            end = document.cookie.indexOf(";", start);
+            if (end === -1) {
+                end = document.cookie.length;
+            }
+            return unescape(document.cookie.substring(start, end));
+        }
+    }
+    return "";
+};
+var amcu_setCookie = function(name, val, endh) {
+    var exdate = new Date;
+    endh = exdate.getHours() + endh;
+    exdate.setHours(endh);
+    document.cookie = name + "=" + escape(val) + (endh === null ? "" : ";expires=" + exdate.toGMTString() + ";path=/;");
+};
+if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function(elem, startFrom) {
+        var startFrom = startFrom || 0;
+        if (startFrom > this.length) {
+            return -1;
+        }
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] == elem && startFrom <= i) {
+                return i;
+            } else if (this[i] == elem && startFrom > i) {
+                return -1;
+            }
+        }
+        return -1;
+    };
+}(function() {
+    var browser = (function() {
+        var appName = navigator.appName,
+            ua = navigator.userAgent,
+            tem;
+        var matches = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+        if (matches && (tem = ua.match(/version\/([\.\d]+)/i)) != null) {
+            matches[2] = tem[1];
+        }
+        matches = matches ? [matches[1].toUpperCase(), matches[2]] : [appName, navigator.appVersion, '-?'];
+        if (ua.indexOf('OPR') + 1) {
+            matches[0] = "OPERA";
+        }
+        return matches;
+    })();
+    var browserName = browser[0];
+    var amcu_switcher = 1;
+    var amcu_click = 0;
+    var amcu_n = (amcu_getCookie("amcu_n")) ? parseInt(amcu_getCookie("amcu_n"), 10) : 0;
+    var amcu_pop = (amcu_getCookie("advmaker_pop")) ? parseInt(amcu_getCookie("advmaker_pop"), 10) : 0;
+    var amcu_intervals = new Array();
+    for (var i = 1; i <= amcu_session_shows; i++) {
+        amcu_intervals.push(-amcu_interval + (amcu_interval * i) + 1);
+    }
+    var amcu_set_overlay = function() {
+        if (!amcu_target) {
+            var amcu_body = document.body,
+                amcu_html = document.documentElement;
+            var amcu_height = Math.max(amcu_body.scrollHeight, amcu_body.offsetHeight, amcu_html.clientHeight, amcu_html.scrollHeight, amcu_html.offsetHeight);
+            var amcu_width = Math.max(amcu_body.scrollWidth, amcu_body.offsetWidth, amcu_html.clientHeight, amcu_html.scrollWidth, amcu_html.offsetWidth);
+            var amcu_overlay = document.createElement('div');
+            amcu_overlay.style.position = (document.compatMode === 'CSS1Compat') ? 'fixed' : 'absolute';
+            // amcu_overlay.innerHTML = '<img src="//w30.am15.net/img/ie_img_fix.gif" width="100%" height="100%">';
+            amcu_overlay.style.zIndex = "9999999";
+            amcu_overlay.style.top = "0";
+            amcu_overlay.style.left = "0";
+            document.body.appendChild(amcu_overlay);
+            amcu_target = amcu_overlay;
+            amcu_target.style.width = amcu_width + "px";
+            amcu_target.style.height = amcu_height + "px";
+        }
+        setTimeout(function() {
+            var amcu_frames = document.getElementsByTagName('iframe');
+            for (var i = 0; i < amcu_frames.length; i++) {
+                if (amcu_frames[i].src.indexOf('am15.net') != -1) {
+                    var amcu_bnrect = amcu_frames[i].getBoundingClientRect();
+                    var amcu_spot = document.createElement('div');
+                    amcu_spot.style.position = "absolute";
+                    amcu_spot.style.zIndex = "10000000";
+                    amcu_spot.style.width = amcu_bnrect.width + "px";
+                    amcu_spot.style.height = amcu_bnrect.height + "px";
+                    amcu_spot.style.left = amcu_bnrect.left + "px";
+                    amcu_spot.style.top = amcu_bnrect.top + "px";
+                    amcu_spot.onmouseover = function() {
+                        amcu_overlay.style.display = "none";
+                    };
+                    amcu_spot.onmouseout = function() {
+                        amcu_overlay.style.display = "block";
+                    };
+                    amcu_frames[i].onmouseover = function() {
+                        amcu_overlay.style.display = "none";
+                    };
+                    amcu_frames[i].onmouseout = function() {
+                        amcu_overlay.style.display = "block";
+                    };
+                    amcu_overlay.appendChild(amcu_spot);
+                }
+            }
+        }, 3000);
+    };
+    var amcu_run = function(e) {
+        if (browserName == "CHROME" || browserName == "SAFARI" || browserName == "OPERA") {
+            if (!e) {
+                e = window.event;
+            }
+            var a = document.createElement('a');
+            a.target = '_blank';
+            a.href = amcu_url;
+            var clk = document.createEvent('MouseEvents');
+            clk.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, false, true, 0, null);
+            a.dispatchEvent(clk);
+        } else if (browserName == "FIREFOX") {
+            var cu = self.window.open(amcu_url, "", 'width=' + (screen.width - 11) + ',height=' + (screen.height - 11) + ',scrollbars=1,top=0,left=0');
+            cu.blur();
+            cu.opener.window.focus();
+            window.self.window.blur();
+            window.focus();
+            for (var i = 0; i < 2; i++) {
+                var dummy = window.open("about:blank");
+                dummy.focus();
+                dummy.close();
+            }
+        } else if (browserName == 'MSIE') {
+            w = screen.availWidth + 1;
+            h = screen.availHeight + 1;
+            args = "titlebar=0,toolbar=0,location=0,menubar=0,scrollbars=1,resizable=1,channelmode=0,directories=0,status=0,";
+            args += "width=" + w + ",height=" + h + ",";
+            args += "left=0,top=0";
+            newwin1 = window.open(amcu_url, "", args);
+            newwin1.blur();
+            amcu_target.onclick = null;
+        } else {
+            window.open(amcu_url);
+        }
+    };
+    var amcu_open_cu = function() {
+        amcu_run();
+        if (amcu_target != window) {
+            amcu_target.parentNode.removeChild(amcu_target);
+        }
+        document.cookie = 'advmaker_pop=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+        return false;
+    };
+    if (amcu_click === 0) {
+        if (amcu_click === 0 && amcu_switcher === 1) {
+            amcu_click = 1;
+            if (amcu_n < (amcu_session_shows * amcu_interval + 1) && amcu_pop == 0) {
+                amcu_n++;
+                amcu_setCookie("amcu_n", amcu_n, 24 / amcu_day_shows);
+            }
+            if ((amcu_intervals.indexOf(parseInt(amcu_n)) != -1)) {
+                amcu_setCookie("advmaker_pop", 1, 24 / amcu_day_shows);
+            }
+            if (amcu_getCookie("advmaker_pop")) {
+                amcu_set_overlay();
+                if (browserName == "FIREFOX" || browserName == "MSIE") {
+                    amcu_target.onclick = function() {
+                        amcu_open_cu();
+                    };
+                } else {
+                    amcu_target.onmousedown = function() {
+                        amcu_open_cu();
+                    };
+                }
+            }
+        }
+    }
+})();
+  </script>
 </head>
 <body>
-    <script>
-  setTimeout(() => window.open('http://google.com'), 1000);
-  </script>
 </body>
 </html>
+
